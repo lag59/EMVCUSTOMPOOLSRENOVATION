@@ -3,7 +3,15 @@ menu?.addEventListener('click',()=>{const open=menu.getAttribute('aria-expanded'
 nav?.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{nav.classList.remove('open');menu?.setAttribute('aria-expanded','false')}));
 document.querySelector('#year').textContent=new Date().getFullYear();
 
-const windowEl=document.querySelector('.gallery-window'),track=document.querySelector('.gallery-track'),slides=[...document.querySelectorAll('.gallery figure')],dotsWrap=document.querySelector('.dots'),pause=document.querySelector('.pause');
+const imageSources=[
+	['assets/pool-hq-01.jpg','Custom Pools'],['assets/pool-hq-02.jpg','Water Features'],['assets/project-1.jpg','Pavers & Patios'],['assets/project-2.jpg','Outdoor Living'],['assets/project-3.png','Pool Renovations'],['assets/project-4.png','Pool Projects'],['assets/project-5.jpg','Restorations'],
+	['assets/polishedpoolconstruction.png','Pool Construction'],['assets/emvpool spa.png','Pool & Spa'],['assets/emvpool whole backyard.png','Whole Backyard'],['assets/emvwholebackyard.png','Backyard Living'],['assets/evmpoolview.png','Pool Views'],
+	['assets/Pool_Website_HQ_01.jpg','Pool Design'],['assets/Pool_Website_HQ_02.jpg','Pool Installation'],['assets/Pool_Website_HQ_03.jpg','Outdoor Pool'],
+	['assets/EMV_Braced_Gunite_Pool_Enhanced_HQ.jpg','Gunite Pools'],['assets/EMV_Completed_Backyard_Pool_Fountains_Enhanced_HQ.jpg','Backyard Pools'],['assets/EMV_Completed_Backyard_Pool_Wide_Enhanced_HQ.jpg','Backyard Pool'],['assets/EMV_Completed_Modern_Rectangular_Pool_Enhanced_HQ.jpg','Modern Pools'],['assets/EMV_Freeform_Pool_Rebar_and_Forming_Enhanced_HQ.jpg','Pool Forming'],['assets/EMV_Freeform_Pool_Shell_Enhanced_HQ.jpg','Freeform Pools'],['assets/EMV_Gunite_Pool_Construction_Enhanced_HQ.jpg','Gunite Construction'],['assets/EMV_Luxury_Patio_Pool_Shell_Enhanced_HQ.jpg','Luxury Pools'],['assets/EMV_Overhead_Pool_and_Spa_Shell_Enhanced_HQ.jpg','Pool & Spa'],['assets/EMV_Pool_Construction_Gallery_Enhanced_HQ.jpg','Pool Construction'],['assets/EMV_Pool_Deck_Rebar_Preparation_Enhanced_HQ.jpg','Pool Decks'],['assets/EMV_Pool_Excavation_and_Forming_Enhanced_HQ.jpg','Pool Excavation'],['assets/EMV_Raised_Spa_Construction_Enhanced_HQ.jpg','Raised Spas'],['assets/EMV_Rectangular_Pool_Shell_Enhanced_HQ.jpg','Rectangular Pools'],['assets/EMV_Reinforced_Spa_Plumbing_Enhanced_HQ.jpg','Spa Plumbing'],['assets/EMV_Stone_Veneer_and_Coping_Enhanced_HQ.jpg','Stonework']
+];
+const windowEl=document.querySelector('.gallery-window'),track=document.querySelector('.gallery-track'),dotsWrap=document.querySelector('.dots'),pause=document.querySelector('.pause');
+track.innerHTML=imageSources.map(([src,title])=>`<figure><img src="${src}" alt="${title}"></figure>`).join('');
+const slides=[...track.querySelectorAll('figure')];
 let index=0,timer,touchStart=0,isPaused=false;
 slides.slice(0,4).forEach(slide=>{const clone=slide.cloneNode(true);clone.classList.add('gallery-clone');track.append(clone)});
 slides.forEach((_,i)=>{const dot=document.createElement('button');dot.type='button';dot.setAttribute('aria-label',`Show project ${i+1}`);dot.addEventListener('click',()=>show(i));dotsWrap.append(dot)});
