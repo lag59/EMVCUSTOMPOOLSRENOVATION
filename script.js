@@ -3,6 +3,81 @@ menu?.addEventListener('click',()=>{const open=menu.getAttribute('aria-expanded'
 nav?.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{nav.classList.remove('open');menu?.setAttribute('aria-expanded','false')}));
 document.querySelector('#year').textContent=new Date().getFullYear();
 
+const translations={
+	en:{
+		nav:['Home','Custom Pools','Pavers','Restorations','Outdoor Living','Gallery','About','Contact'],
+		headerEstimate:'Get a free estimate',
+		headerMenu:'Menu',
+		heroLabel:'Custom Pools • Pavers • Restorations',
+		heroTitle:'Outdoor<br>living<br>built better.',
+		heroText:'Custom pools, pavers, and restoration services designed around your home and built for a lifetime of enjoyment.',
+		heroButton:'Get a free estimate',
+		viewProjects:'View our projects',
+		serviceStrip:['Custom Pools','Pavers & Decks','Pool Restorations','Outdoor Living'],
+		serviceSub:['Design & Construction','Patios, Walkways & More','Repair · Resurface · Upgrade','Fire Pits, Kitchens & More'],
+		footerCta:'Get a free estimate',
+		footerCredit:'You like this page?'
+	},
+	es:{
+		nav:['Inicio','Piscinas Personalizadas','Pavers','Restauraciones','Vida Exterior','Galería','Nosotros','Contacto'],
+		headerEstimate:'Solicita una cotización gratis',
+		headerMenu:'Menú',
+		heroLabel:'Piscinas Personalizadas • Pavers • Restauraciones',
+		heroTitle:'Exterior<br>viviendo<br>mejor construido.',
+		heroText:'Piscinas personalizadas, pavers y servicios de restauración diseñados para tu hogar y construidos para disfrutar por muchos años.',
+		heroButton:'Solicita una cotización',
+		viewProjects:'Ver nuestros proyectos',
+		serviceStrip:['Piscinas Personalizadas','Pavers y Decks','Restauraciones de Piscina','Vida Exterior'],
+		serviceSub:['Diseño y Construcción','Patios, Pasillos y Más','Reparación · Revestimiento · Actualización','Fogatas, Cocinas y Más'],
+		footerCta:'Solicita una cotización',
+		footerCredit:'¿Te gusta esta página?'
+	}
+};
+
+const appState={lang:'en'};
+const applyTranslations=(lang)=>{
+	const t=translations[lang] || translations.en;
+	const navLinks=document.querySelectorAll('.header nav a');
+	navLinks.forEach((link,index)=>{
+		if(t.nav[index]) link.textContent=t.nav[index];
+	});
+	const estimateLink=document.querySelector('.estimate');
+	if(estimateLink) estimateLink.textContent=t.headerEstimate;
+	const menuButton=document.querySelector('.menu-button .sr-only');
+	if(menuButton) menuButton.textContent=t.headerMenu;
+	const heroLabel=document.querySelector('.hero-copy .overline.light');
+	if(heroLabel) heroLabel.innerHTML=t.heroLabel.replace(/ • /g,' <i></i> ');
+	const heroTitle=document.querySelector('.hero-copy h1');
+	if(heroTitle) heroTitle.innerHTML=t.heroTitle;
+	const heroText=document.querySelector('.hero-copy p:not(.overline)');
+	if(heroText) heroText.textContent=t.heroText;
+	const heroButton=document.querySelector('.hero .button.blue');
+	if(heroButton) heroButton.innerHTML=`${t.heroButton} <span>→</span>`;
+	const galleryButton=document.querySelector('.hero .button.clear');
+	if(galleryButton) galleryButton.textContent=t.viewProjects;
+	const stripLinks=document.querySelectorAll('.service-strip a strong');
+	stripLinks.forEach((el,index)=>{
+		if(t.serviceStrip[index]) el.textContent=t.serviceStrip[index];
+	});
+	const stripSmall=document.querySelectorAll('.service-strip a small');
+	stripSmall.forEach((el,index)=>{
+		if(t.serviceSub[index]) el.textContent=t.serviceSub[index];
+	});
+	const footerCredit=document.querySelector('.site-credit');
+	if(footerCredit) footerCredit.innerHTML=`${t.footerCredit} <span>→</span>`;
+	document.documentElement.lang=lang;
+	document.querySelectorAll('.lang-btn').forEach(btn=>{
+		btn.classList.toggle('active',btn.dataset.lang===lang);
+	});
+};
+
+document.querySelectorAll('.lang-btn').forEach(btn=>{
+	btn.addEventListener('click',()=>{
+		appState.lang=btn.dataset.lang;
+		applyTranslations(appState.lang);
+	});
+});
+
 const estimateForm=document.getElementById('estimateForm');
 estimateForm?.addEventListener('submit',e=>{
 	e.preventDefault();
