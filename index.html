@@ -6,6 +6,8 @@
   <meta name="theme-color" content="#07385f">
   <title>EMV Custom Pools & Restoration | Wake Forest, NC</title>
   <meta name="description" content="Custom pools, pavers, restorations and outdoor living construction in Wake Forest, North Carolina.">
+  <link rel="icon" type="image/png" href="assets/logo/EMVCUSTOMPOOLSsquare.png">
+  <link rel="apple-touch-icon" href="assets/logo/EMVCUSTOMPOOLSsquare.png">
   <link rel="stylesheet" href="styles.css?v=8">
 </head>
 <body>
@@ -36,7 +38,7 @@
         <p class="overline light">Custom Pools <i></i> Pavers <i></i> Restorations</p>
         <h1>Outdoor<br>living<br>built better.</h1>
         <p>Custom pools, pavers, and restoration services designed around your home and built for a lifetime of enjoyment.</p>
-        <div class="actions"><a class="button blue" href="mailto:emvpools007@gmail.com?subject=Free%20Estimate%20Request">Get a free estimate <span>→</span></a><a class="button clear" href="#gallery">View our projects</a></div>
+        <div class="actions"><a class="button blue" href="#estimate">Get a free estimate <span>→</span></a><a class="button clear" href="#gallery">View our projects</a></div>
       </div>
     </section>
 
@@ -64,7 +66,7 @@
         <p>From repairs and resurfacing to tile, coping, plumbing, and upgrades, EMV restores your pool so it looks better, works better, and lasts longer.</p>
         <a class="button blue" href="#contact">Talk to our restoration team <span>→</span></a>
       </div>
-      <div class="restoration-photo"><img src="assets/project-4.png" alt="Pool restoration project detail" style="object-position:center center; transform:scale(1.12);"></div>
+      <div class="restoration-photo"><img src="assets/project-4.png" alt="Pool restoration project detail"></div>
     </section>
 
     <section class="gallery" id="gallery">
@@ -115,6 +117,78 @@
       <h2>Built Around the Way You Live.</h2>
       <p>Pool construction, tile, coping, plaster, decks, retaining walls, water features, slides, spas and restoration—planned as one cohesive outdoor space.</p>
     </section>
+
+    <section class="estimate-section" id="estimate">
+      <div class="estimate-intro">
+        <p class="overline">Free estimate</p>
+        <h2>Tell us about your project.</h2>
+        <p>Share a few details and our team will reach out to talk through your pool, paver, or restoration needs.</p>
+      </div>
+
+      <form id="estimateForm" class="estimate-form" novalidate>
+        <div class="field-row two-up">
+          <label>
+            <span>Name</span>
+            <input type="text" name="name" placeholder="Your full name" required>
+          </label>
+          <label>
+            <span>Email</span>
+            <input type="email" name="email" placeholder="you@example.com" required>
+          </label>
+        </div>
+
+        <div class="field-row two-up">
+          <label>
+            <span>Phone</span>
+            <input type="tel" name="phone" placeholder="(919) 555-0101" required>
+          </label>
+          <label>
+            <span>Project type</span>
+            <select name="projectType" required>
+              <option value="">Select a service</option>
+              <option>Custom Pool</option>
+              <option>Pavers & Decks</option>
+              <option>Pool Restoration</option>
+              <option>Outdoor Living</option>
+              <option>Other</option>
+            </select>
+          </label>
+        </div>
+
+        <div class="field-row two-up">
+          <label>
+            <span>Timeline</span>
+            <select name="timeline">
+              <option>ASAP</option>
+              <option>Within 1-3 months</option>
+              <option>Within 3-6 months</option>
+              <option>Just exploring</option>
+            </select>
+          </label>
+          <label>
+            <span>Budget range</span>
+            <select name="budget">
+              <option>Under $25k</option>
+              <option>$25k - $50k</option>
+              <option>$50k - $100k</option>
+              <option>$100k - $200k</option>
+              <option>$200k+</option>
+              <option>Prefer not to say</option>
+            </select>
+          </label>
+        </div>
+
+        <label>
+          <span>Project details</span>
+          <textarea name="message" rows="6" placeholder="Tell us about your ideas, goals, current condition, and anything you'd like to include." required></textarea>
+        </label>
+
+        <div class="form-actions">
+          <button type="submit" class="button blue">Request estimate</button>
+          <p class="form-status" aria-live="polite"></p>
+        </div>
+      </form>
+    </section>
   </main>
 
   <footer id="contact">
@@ -122,7 +196,6 @@
       <a href="tel:+19192087070"><b aria-hidden="true"><svg viewBox="0 0 24 24" role="img"><path d="M6.6 3.5 4.8 4.3a2 2 0 0 0-1.2 2.2c1 7.1 6.8 12.9 13.9 13.9a2 2 0 0 0 2.2-1.2l.8-1.8a1.5 1.5 0 0 0-.6-1.9l-3.2-1.9a1.5 1.5 0 0 0-1.9.3l-1.2 1.5a14 14 0 0 1-4.9-4.9l1.5-1.2a1.5 1.5 0 0 0 .3-1.9L8.5 4.1a1.5 1.5 0 0 0-1.9-.6Z"/></svg></b><span><strong>919-208-7070</strong><small>Call or Text Us</small></span></a>
       <a href="mailto:emvpools007@gmail.com"><b aria-hidden="true"><svg viewBox="0 0 24 24" role="img"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m4 7 8 6 8-6"/></svg></b><span><strong>emvpools007@gmail.com</strong><small>Email Us</small></span></a>
       <a href="https://maps.google.com/?q=2521+Rolesville+Rd+Wake+Forest+NC+27587" target="_blank" rel="noopener"><b aria-hidden="true"><svg viewBox="0 0 24 24" role="img"><path d="M20 10c0 5-8 11-8 11S4 15 4 10a8 8 0 1 1 16 0Z"/><circle cx="12" cy="10" r="2.5"/></svg></b><span><strong>2521 Rolesville Rd<br>Wake Forest, NC 27587</strong><small>Visit Our Location</small></span></a>
-      <a class="button blue footer-cta" href="mailto:emvpools007@gmail.com?subject=Free%20Estimate%20Request">Get a free estimate <span>→</span></a>
     </div>
     <div class="footer-brand">
       <img src="assets/logo/EMVCUSTOMPOOLSsquare.png" alt="EMV Custom Pools and Restoration">

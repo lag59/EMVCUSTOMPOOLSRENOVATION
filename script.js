@@ -3,6 +3,33 @@ menu?.addEventListener('click',()=>{const open=menu.getAttribute('aria-expanded'
 nav?.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{nav.classList.remove('open');menu?.setAttribute('aria-expanded','false')}));
 document.querySelector('#year').textContent=new Date().getFullYear();
 
+const estimateForm=document.getElementById('estimateForm');
+estimateForm?.addEventListener('submit',e=>{
+	e.preventDefault();
+	const formData=new FormData(estimateForm);
+	const name=(formData.get('name')||'').toString().trim();
+	const email=(formData.get('email')||'').toString().trim();
+	const phone=(formData.get('phone')||'').toString().trim();
+	const projectType=(formData.get('projectType')||'General project').toString().trim();
+	const timeline=(formData.get('timeline')||'Not specified').toString().trim();
+	const budget=(formData.get('budget')||'Not specified').toString().trim();
+	const message=(formData.get('message')||'').toString().trim();
+	const formStatus=estimateForm.querySelector('.form-status');
+	const subject=encodeURIComponent(`Free Estimate Request - ${projectType}`);
+	const body=encodeURIComponent(
+		`Name: ${name}\n`+
+		`Email: ${email}\n`+
+		`Phone: ${phone}\n`+
+		`Project Type: ${projectType}\n`+
+		`Timeline: ${timeline}\n`+
+		`Budget: ${budget}\n\n`+
+		`Project Details:\n${message}`
+	);
+	window.location.href=`mailto:emvpools007@gmail.com?subject=${subject}&body=${body}`;
+	if(formStatus){formStatus.textContent='Your email app is opening with your estimate details.';}
+	estimateForm.reset();
+});
+
 const imageSources=[
 	['assets/pool-bubblers-and-sheer-descent-02.jpg','Water Features'],['assets/pool-hq-02.jpg','Water Features'],['assets/pool-water-feature-jets-installation-01.jpg','Pool Water Features'],['assets/pool-wall-water-features-01.jpg','Pool Wall Features'],['assets/project-1.jpg','Pavers & Patios'],['assets/project-2.jpg','Outdoor Living'],
 	['assets/pool-hq-01.jpg','Custom Pools'],['assets/polishedpoolconstruction.png','Pool Construction'],['assets/emvpool spa.png','Pool & Spa'],['assets/emvpool whole backyard.png','Whole Backyard'],['assets/emvwholebackyard.png','Backyard Living'],['assets/evmpoolview.png','Pool Views'],
