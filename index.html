@@ -20,41 +20,46 @@
     </div>
   </div>
   <header class="header">
-    <a class="logo" href="#home"><img src="assets/logo/EMVCUSTOMPOOLSsquare.png" alt="EMV Custom Pools and Restoration"></a>
-    <button class="menu-button" aria-expanded="false" aria-controls="nav"><span></span><span></span><span></span><b class="sr-only">Menu</b></button>
+    <a class="logo" href="index.html"><img src="assets/logo/EMVCUSTOMPOOLSsquare.png" alt="EMV Custom Pools and Restoration"></a>
+    <button class="menu-button" aria-expanded="false" aria-controls="nav"><span></span><span></span><span></span><b class="sr-only" data-i18n="headerMenu">Menu</b></button>
     <nav id="nav">
-      <a class="active" href="#home">Home</a><a href="#services">Custom Pools</a><a href="#pavers">Pavers</a><a href="#restoration">Restorations</a><a href="#outdoor">Outdoor Living</a><a href="#gallery">Gallery</a><a href="#about">About</a><a href="#contact">Contact</a>
+      <a class="active" href="index.html" data-i18n="navHome">Home</a><a href="custom-pools.html" data-i18n="navPools">Custom Pools</a><a href="hardscapes.html" data-i18n="navHardscapes">Hardscapes</a><a href="renovations.html" data-i18n="navRenovations">Renovations</a><a href="outdoor-living.html" data-i18n="navOutdoor">Outdoor Living</a><a href="gallery.html" data-i18n="navPortfolio">Portfolio</a><a href="about.html" data-i18n="navStory">Our Story</a><a class="nav-cta" href="consultation.html" data-i18n="navConsultation">Request a Consultation</a>
     </nav>
     <div class="lang-switcher" aria-label="Language switcher">
       <button class="lang-btn active" data-lang="en" type="button">EN</button>
       <button class="lang-btn" data-lang="es" type="button">ES</button>
     </div>
-    <a class="estimate" href="mailto:emvpools007@gmail.com?subject=Free%20Estimate%20Request">Get a free estimate</a>
+    <a class="estimate" data-i18n="headerEstimate" href="mailto:emvpools007@gmail.com?subject=Free%20Estimate%20Request">Get a free estimate</a>
   </header>
 
   <main id="main">
     <section class="hero" id="home">
-      <video autoplay muted loop poster="assets/project-5.jpg" aria-label="Completed pool and outdoor living project">
+      <video autoplay muted loop poster="assets/Custom Pool/project-5.jpg" aria-label="Completed pool and outdoor living project">
         <source src="assets/logo/13550565_1920_1080_30fps.mp4" type="video/mp4">
       </video>
       <div class="hero-shade"></div>
       <div class="hero-copy">
-        <p class="overline light">Custom Pools <i></i> Pavers <i></i> Restorations</p>
-        <h1>Outdoor<br>living<br>built better.</h1>
-        <p>Custom pools, pavers, and restoration services designed around your home and built for a lifetime of enjoyment.</p>
-        <div class="actions"><a class="button blue" href="#estimate">Get a free estimate <span>→</span></a><a class="button clear" href="#gallery">View our projects</a></div>
+        <p class="overline light" data-i18n="heroLabel">Custom Pools <i></i> Hardscapes <i></i> Outdoor Living</p>
+        <h1 data-i18n="heroTitle">Custom Pools.<br>Timeless Outdoor Spaces.<br>Built Around You.</h1>
+        <p data-i18n="heroText">EMV Custom Pools & Restoration designs and builds custom pools, hardscapes, renovations, and complete outdoor living spaces with craftsmanship that transforms your backyard.</p>
+        <div class="actions"><a class="button blue" data-i18n="heroButton" href="consultation.html">Request a consultation <span>→</span></a><a class="button clear" data-i18n="viewProjects" href="gallery.html">View our projects</a></div>
       </div>
     </section>
 
-    <section class="service-strip" id="services">
-      <a href="#services"><span class="icon waves">≋</span><strong>Custom Pools</strong><small>Design & Construction</small></a>
-      <a href="#pavers"><span class="icon">▱</span><strong>Pavers & Decks</strong><small>Patios, Walkways & More</small></a>
-      <a href="#restoration"><span class="icon">◉</span><strong>Pool Restorations</strong><small>Repair · Resurface · Upgrade</small></a>
-      <a href="#outdoor"><span class="icon">⌂</span><strong>Outdoor Living</strong><small>Fire Pits, Kitchens & More</small></a>
+    <section class="service-strip home-services" id="services">
+      <a href="custom-pools.html"><span class="icon waves">≋</span><strong>Custom Pools</strong><small>Designed for your home</small></a>
+      <a href="hardscapes.html"><span class="icon">▱</span><strong>Hardscapes</strong><small>Decks, stone & structure</small></a>
+      <a href="renovations.html"><span class="icon">◉</span><strong>Pool Renovations</strong><small>Love your backyard again</small></a>
+      <a href="outdoor-living.html"><span class="icon">⌂</span><strong>Outdoor Living</strong><small>More ways to live outside</small></a>
+    </section>
+
+    <section class="video-showcase" aria-labelledby="video-showcase-title">
+      <div class="video-showcase-copy"><p class="overline light">See the EMV process</p><h2 id="video-showcase-title">Craftsmanship in motion.</h2><p>From the first phase of construction to the finished backyard, our work is built with care at every step.</p><a class="button blue" href="consultation.html">Request a consultation <span>→</span></a></div>
+      <div class="video-showcase-media"><video autoplay muted playsinline controls preload="metadata" data-low-volume data-video-playlist aria-label="EMV pool construction and outdoor living projects"><source src="assets/VIDEOS/copy_07BC608B-EE10-4DE0-950A-C0382CABEE38.MOV" type="video/quicktime">Your browser does not support this video.</video></div>
     </section>
 
     <section class="pavers" id="pavers">
-      <div class="pavers-photo"><img src="assets/pool-bubblers-and-sheer-descent-02.jpg" alt="Pool bubblers and sheer descent water feature"></div>
+      <div class="pavers-photo"><img src="assets/Custom Pool/pool-bubblers-and-sheer-descent-02.jpg" alt="Pool bubblers and sheer descent water feature"></div>
       <div class="pavers-copy">
         <p class="overline">Beyond the pool</p>
         <h2>Pavers Designed<br>Around Your Pool</h2>
@@ -70,50 +75,31 @@
         <p>From repairs and resurfacing to tile, coping, plumbing, and upgrades, EMV restores your pool so it looks better, works better, and lasts longer.</p>
         <a class="button blue" href="#contact">Talk to our restoration team <span>→</span></a>
       </div>
-      <div class="restoration-photo"><img src="assets/project-4.png" alt="Pool restoration project detail"></div>
+      <div class="restoration-photo"><img src="assets/Custom Pool/project-4.png" alt="Pool restoration project detail"></div>
     </section>
 
-    <section class="gallery" id="gallery">
+    <section class="home-proof"><div><p class="overline">Why choose EMV</p><h2>Craftsmanship you can see. Service you can feel.</h2><p>We plan the details, communicate clearly, and build outdoor spaces around the people who will enjoy them.</p></div><div class="proof-list"><strong>Thoughtful design</strong><strong>Quality materials</strong><strong>Clear communication</strong><strong>Built for lasting value</strong></div></section>
+
+    <section class="gallery gallery-preview" id="gallery">
       <div class="gallery-heading">
-        <div><p class="overline">Our work</p><h2>Featured Projects</h2></div>
-        <a href="#full-gallery">View full gallery →</a>
+        <div><p class="overline" data-i18n="galleryLabel">Our work</p><h2 data-i18n="galleryTitle">Featured Projects</h2></div>
+        <a data-i18n="galleryLink" href="gallery.html">View full gallery →</a>
       </div>
       <div class="gallery-window" tabindex="0" aria-label="Automatically scrolling featured project gallery">
         <div class="gallery-track">
-          <figure><img src="assets/pool-hq-01.jpg" alt="Custom pool and spa"></figure>
-          <figure><img src="assets/project-1.jpg" alt="Custom paver patio"></figure>
-          <figure><img src="assets/pool-hq-02.jpg" alt="Pool water feature"></figure>
-          <figure><img src="assets/project-2.jpg" alt="Completed outdoor living project"></figure>
-          <figure><img src="assets/project-5.jpg" alt="Pool restoration project"></figure>
+          <figure><img src="assets/Custom Pool/pool-hq-01.jpg" alt="Custom pool and spa"></figure>
+          <figure><img src="assets/Custom Pool/project-1.jpg" alt="Custom paver patio"></figure>
+          <figure><img src="assets/Construction/pool-hq-02.jpg" alt="Pool water feature"></figure>
+          <figure><img src="assets/Custom Pool/project-2.jpg" alt="Completed outdoor living project"></figure>
+          <figure><img src="assets/Custom Pool/project-5.jpg" alt="Pool restoration project"></figure>
         </div>
       </div>
       <div class="gallery-controls"><button class="prev" aria-label="Previous project">←</button><div class="dots"></div><button class="pause" aria-pressed="false">Ⅱ Pause</button><button class="next" aria-label="Next project">→</button></div>
     </section>
 
-    <section class="full-gallery" id="full-gallery">
-      <div class="gallery-heading">
-        <div><p class="overline">The full collection</p><h2>Project Gallery</h2></div>
-        <a href="#contact">Start your project →</a>
-      </div>
-      <div class="full-gallery-grid">
-        <figure><img src="assets/pool-hq-01.jpg" alt="Custom pool and spa"></figure>
-        <figure><img src="assets/EMV_Completed_Modern_Rectangular_Pool_Enhanced_HQ.jpg" alt="Modern rectangular pool"></figure>
-        <figure><img src="assets/EMV_Luxury_Patio_Pool_Shell_Enhanced_HQ.jpg" alt="Luxury patio pool shell"></figure>
-        <figure><img src="assets/EMV_Overhead_Pool_and_Spa_Shell_Enhanced_HQ.jpg" alt="Overhead view of pool and spa shell"></figure>
-        <figure><img src="assets/project-1.jpg" alt="Custom paver patio"></figure>
-        <figure><img src="assets/EMV_Stone_Veneer_and_Coping_Enhanced_HQ.jpg" alt="Stone veneer and pool coping"></figure>
-        <figure><img src="assets/pool-hq-02.jpg" alt="Pool deck and water feature"></figure>
-        <figure><img src="assets/EMV_Completed_Backyard_Pool_Fountains_Enhanced_HQ.jpg" alt="Completed backyard pool with fountains"></figure>
-        <figure><img src="assets/project-2.jpg" alt="Completed outdoor living project"></figure>
-        <figure><img src="assets/EMV_Braced_Gunite_Pool_Enhanced_HQ.jpg" alt="Braced gunite pool construction"></figure>
-        <figure><img src="assets/project-4.png" alt="Pool renovation project"></figure>
-        <figure><img src="assets/project-5.jpg" alt="Completed pool restoration project"></figure>
-      </div>
-    </section>
-
-    <section class="difference" id="about">
-      <div><p class="overline light">The EMV difference</p><h2>Quality. Craftsmanship. Lasting Value.</h2><p>We specialize in creating and restoring outdoor spaces that bring families together. From custom pools to pavers and complete restorations, our focus is on quality, durability, and customer satisfaction.</p></div>
-      <a class="button blue" href="#contact">Learn more about EMV <span>→</span></a>
+    <section class="difference">
+      <div><p class="overline light" data-i18n="aboutLabel">The EMV difference</p><h2 data-i18n="aboutTitle">Quality. Craftsmanship. Lasting Value.</h2><p data-i18n="aboutText">We specialize in creating and restoring outdoor spaces that bring families together. From custom pools to pavers and complete restorations, our focus is on quality, durability, and customer satisfaction.</p></div>
+      <a class="button blue" data-i18n="aboutButton" href="about.html">Learn more about EMV <span>→</span></a>
     </section>
 
     <section class="outdoor-copy" id="outdoor">
@@ -124,30 +110,30 @@
 
     <section class="estimate-section" id="estimate">
       <div class="estimate-intro">
-        <p class="overline">Free estimate</p>
-        <h2>Tell us about your project.</h2>
-        <p>Share a few details and our team will reach out to talk through your pool, paver, or restoration needs.</p>
+        <p class="overline" data-i18n="estimateLabel">Free estimate</p>
+        <h2 data-i18n="estimateTitle">Tell us about your project.</h2>
+        <p data-i18n="estimateText">Share a few details and our team will reach out to talk through your pool, paver, or restoration needs.</p>
       </div>
 
       <form id="estimateForm" class="estimate-form" novalidate>
         <div class="field-row two-up">
           <label>
-            <span>Name</span>
+            <span data-i18n="nameLabel">Name</span>
             <input type="text" name="name" placeholder="Your full name" required>
           </label>
           <label>
-            <span>Email</span>
+            <span data-i18n="emailLabel">Email</span>
             <input type="email" name="email" placeholder="you@example.com" required>
           </label>
         </div>
 
         <div class="field-row two-up">
           <label>
-            <span>Phone</span>
+            <span data-i18n="phoneLabel">Phone</span>
             <input type="tel" name="phone" placeholder="(919) 555-0101" required>
           </label>
           <label>
-            <span>Project type</span>
+            <span data-i18n="projectTypeLabel">Project type</span>
             <select name="projectType" required>
               <option value="">Select a service</option>
               <option>Custom Pool</option>
@@ -161,7 +147,7 @@
 
         <div class="field-row two-up">
           <label>
-            <span>Timeline</span>
+            <span data-i18n="timelineLabel">Timeline</span>
             <select name="timeline">
               <option>ASAP</option>
               <option>Within 1-3 months</option>
@@ -170,7 +156,7 @@
             </select>
           </label>
           <label>
-            <span>Budget range</span>
+            <span data-i18n="budgetLabel">Budget range</span>
             <select name="budget">
               <option>Under $25k</option>
               <option>$25k - $50k</option>
@@ -183,12 +169,12 @@
         </div>
 
         <label>
-          <span>Project details</span>
+          <span data-i18n="detailsLabel">Project details</span>
           <textarea name="message" rows="6" placeholder="Tell us about your ideas, goals, current condition, and anything you'd like to include." required></textarea>
         </label>
 
         <div class="form-actions">
-          <button type="submit" class="button blue">Request estimate</button>
+          <button type="submit" class="button blue" data-i18n="requestEstimate">Request estimate</button>
           <p class="form-status" aria-live="polite"></p>
         </div>
       </form>
@@ -205,10 +191,10 @@
       <img src="assets/logo/EMVCUSTOMPOOLSsquare.png" alt="EMV Custom Pools and Restoration">
       <nav class="footer-social" aria-label="Social media links">
         <a href="#contact" aria-label="TikTok"><span aria-hidden="true">♪</span> TikTok</a>
-        <a href="#contact" aria-label="Instagram"><span aria-hidden="true">◎</span> Instagram</a>
-        <a href="#contact" aria-label="Facebook"><span aria-hidden="true">f</span> Facebook</a>
+        <a href="https://www.instagram.com/emv_custompool_restoration/" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><span aria-hidden="true">◎</span> Instagram</a>
+        <a href="https://www.facebook.com/profile.php?id=61593999464647&sk=directory_contact_info" target="_blank" rel="noopener noreferrer" aria-label="Facebook"><span aria-hidden="true">f</span> Facebook</a>
       </nav>
-      <a class="site-credit" href="https://mdmcreation.com/" target="_blank" rel="noopener noreferrer">You like this page? <span>→</span></a>
+      <a class="site-credit" data-i18n="footerCredit" href="https://mdmcreation.com/" target="_blank" rel="noopener noreferrer">You like this page? <span>→</span></a>
       <p>© <span id="year"></span> EMV Custom Pools & Restoration. All rights reserved.</p>
     </div>
   </footer>
