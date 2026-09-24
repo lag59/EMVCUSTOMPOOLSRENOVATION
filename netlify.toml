@@ -4,8 +4,3 @@
 
 [functions]
   node_bundler = "esbuild"
-
-[[redirects]]
-  from = "/.netlify/functions/mdm-gallery"
-  to = "/.netlify/functions/mdm-gallery"
-  status = 200

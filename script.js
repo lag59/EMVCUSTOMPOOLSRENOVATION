@@ -158,6 +158,23 @@ document.querySelectorAll('[data-gallery-category]').forEach(section=>{
 	if(grid) grid.innerHTML=items.map(([src,title])=>`<figure tabindex="0"><img loading="lazy" src="${src}" alt="${title}"><figcaption>${title}</figcaption></figure>`).join('');
 });
 
+const mdmFeed=document.querySelector('[data-mdm-feed]');
+if(mdmFeed){
+	const feedTrack=mdmFeed.querySelector('[data-mdm-feed-track]');
+	const feedStatus=mdmFeed.querySelector('[data-mdm-feed-status]');
+	const feedPrev=mdmFeed.querySelector('[data-mdm-prev]'),feedNext=mdmFeed.querySelector('[data-mdm-next]');
+	let feedIndex=0,feedTimer,feedItems=[];
+	const feedVisible=()=>innerWidth<=560?1:innerWidth<=850?2:3;
+	const moveFeed=(next,restart=true)=>{if(!feedItems.length)return;const max=Math.max(0,feedItems.length-feedVisible());feedIndex=Math.max(0,Math.min(next,max));const card=feedTrack.querySelector('.mdm-feed-card');const gap=16;const width=card?card.getBoundingClientRect().width:0;feedTrack.style.transform=`translateX(-${feedIndex*(width+gap)}px)`;if(restart)startFeed()};
+	const startFeed=()=>{clearInterval(feedTimer);if(!document.hidden&&feedItems.length>feedVisible())feedTimer=setInterval(()=>moveFeed(feedIndex>=feedItems.length-feedVisible()?0:feedIndex+1,false),4500)};
+	const renderFeed=(items)=>{feedItems=items;feedTrack.textContent='';items.forEach((item,index)=>{const card=document.createElement('article');card.className='mdm-feed-card';const image=document.createElement('img');image.src=item.thumbnailUrl||item.imageUrl;image.alt=item.alt||item.title||'EMV Custom Pools social post';image.loading=index<3?'eager':'lazy';image.decoding='async';card.append(image);if(item.title){const title=document.createElement('p');title.textContent=item.title;card.append(title)}if(item.sourceUrl){const link=document.createElement('a');link.href=item.sourceUrl;link.target='_blank';link.rel='noopener noreferrer';link.textContent='View post →';card.append(link)}feedTrack.append(card)});if(feedStatus)feedStatus.textContent=items.length?'':'No approved social posts are available yet.';moveFeed(0,false);startFeed()};
+	if(feedPrev)feedPrev.addEventListener('click',()=>moveFeed(feedIndex-1));
+	if(feedNext)feedNext.addEventListener('click',()=>moveFeed(feedIndex+1));
+	mdmFeed.addEventListener('mouseenter',()=>clearInterval(feedTimer));mdmFeed.addEventListener('mouseleave',startFeed);
+	addEventListener('resize',()=>moveFeed(feedIndex,false));document.addEventListener('visibilitychange',startFeed);
+	fetch('/.netlify/functions/mdm-gallery?limit=12',{headers:{Accept:'application/json'}}).then(response=>{if(!response.ok)throw new Error('Feed unavailable');return response.json()}).then(payload=>renderFeed(Array.isArray(payload.items)?payload.items:[])).catch(()=>{if(feedStatus)feedStatus.textContent='The latest social posts will appear here after the feed is connected.'});
+}
+
 function shuffleArray(list){
 	const shuffled=[...list];
 	for(let i=shuffled.length-1;i>0;i--){
