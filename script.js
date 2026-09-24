@@ -1,5 +1,3 @@
-document.querySelectorAll('link[rel~="icon"],link[rel="apple-touch-icon"]').forEach(link=>link.remove());
-
 const pageKey=location.pathname.split('/').pop().replace(/\.html?$/i,'')||'index';
 const seoPages={
 	index:{title:'Custom Pools & Outdoor Living | EMV Custom Pools | Wake Forest, NC',description:'EMV Custom Pools & Restoration designs and builds custom pools, hardscapes, renovations, and complete outdoor living spaces in Wake Forest and the Triangle.'},
@@ -9,7 +7,8 @@ const seoPages={
 	'outdoor-living':{title:'Outdoor Living Design & Construction | EMV Custom Pools | Wake Forest, NC',description:'Create a complete backyard destination with EMV outdoor kitchens, patios, fire features, lounge areas, lighting, water features, pools, and entertaining spaces.'},
 	gallery:{title:'Pool, Hardscape & Renovation Portfolio | EMV Custom Pools',description:'Explore EMV project photos featuring custom pools, construction, decks, plumbing, renovations, resurfacing, tile, coping, retaining walls, and transformations.'},
 	about:{title:'Our Story | EMV Custom Pools & Restoration | Wake Forest, NC',description:'Learn how EMV Custom Pools & Restoration combines thoughtful design, quality materials, clear communication, and craftsmanship to build lasting outdoor spaces.'},
-	consultation:{title:'Request a Pool & Outdoor Living Consultation | EMV Custom Pools',description:'Tell EMV about your backyard, pool, hardscape, renovation, or outdoor living project and request a consultation with our team.'}
+	consultation:{title:'Request a Pool & Outdoor Living Consultation | EMV Custom Pools',description:'Tell EMV about your backyard, pool, hardscape, renovation, or outdoor living project and request a consultation with our team.'},
+	'social-connect':{title:'Connect With EMV | EMV Custom Pools & Restoration',description:'Connect with EMV Custom Pools & Restoration on Instagram, Facebook, WhatsApp, and our digital contact card.'}
 };
 const seo=seoPages[pageKey]||{title:'EMV Custom Pools & Restoration | Wake Forest, NC',description:'EMV Custom Pools & Restoration builds custom pools, hardscapes, renovations, and outdoor living spaces in Wake Forest and the Triangle.'};
 document.title=seo.title;
@@ -18,22 +17,32 @@ setMeta('description',seo.description);setMeta('og:title',seo.title,true);setMet
 const businessSchema={"@context":"https://schema.org","@type":"LocalBusiness","@id":"#emv-custom-pools","name":"EMV Custom Pools & Restoration","description":seo.description,"telephone":"+1-919-208-7070","email":"emvpools007@gmail.com","image":"assets/logo/EMVCUSTOMPOOLSsquare.png","address":{"@type":"PostalAddress","streetAddress":"2521 Rolesville Rd","addressLocality":"Wake Forest","addressRegion":"NC","postalCode":"27587","addressCountry":"US"},"areaServed":["Wake Forest","Raleigh","Rolesville","North Carolina"],"url":location.href,"serviceType":["Custom pool construction","Pool renovations","Hardscapes","Outdoor living"]};
 const schemaScript=document.createElement('script');schemaScript.type='application/ld+json';schemaScript.textContent=JSON.stringify(businessSchema);document.head.append(schemaScript);
 document.querySelectorAll('.contact-grid').forEach(grid=>{if(grid.querySelector('.whatsapp-link'))return;const link=document.createElement('a');link.className='whatsapp-link';link.href='https://wa.me/19192087070?text=Hello%20EMV%2C%20I%27d%20like%20to%20discuss%20a%20backyard%20project.';link.target='_blank';link.rel='noopener noreferrer';link.innerHTML='<b aria-hidden="true">◉</b><span><strong>WhatsApp</strong><small>Message Us</small></span>';grid.append(link)});
+document.querySelectorAll('.footer-social a').forEach(link=>{if(link.textContent.toLowerCase().includes('tiktok')){link.href='https://www.tiktok.com/@pools.builder';link.target='_blank';link.rel='noopener noreferrer'}});
 
 const menu=document.querySelector('.menu-button'),nav=document.querySelector('#nav');
-menu?.addEventListener('click',()=>{const open=menu.getAttribute('aria-expanded')==='true';menu.setAttribute('aria-expanded',String(!open));nav.classList.toggle('open',!open)});
-nav?.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{nav.classList.remove('open');menu?.setAttribute('aria-expanded','false')}));
-document.querySelector('#year')?.replaceChildren(String(new Date().getFullYear()));
+if(nav&&!nav.querySelector('a[href="social-connect.html"]')){
+	const socialLink=document.createElement('a');
+	socialLink.href='social-connect.html';
+	socialLink.dataset.i18n='navSocial';
+	socialLink.textContent='Connect';
+	const consultationLink=nav.querySelector('.nav-cta');
+	if(consultationLink) nav.insertBefore(socialLink,consultationLink); else nav.append(socialLink);
+}
+if(menu&&nav) menu.addEventListener('click',()=>{const open=menu.getAttribute('aria-expanded')==='true';menu.setAttribute('aria-expanded',String(!open));nav.classList.toggle('open',!open)});
+if(nav) nav.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{nav.classList.remove('open');if(menu)menu.setAttribute('aria-expanded','false')}));
+const year=document.querySelector('#year');
+if(year) year.textContent=String(new Date().getFullYear());
 document.querySelectorAll('video[data-low-volume]').forEach(video=>{video.volume=.15;video.addEventListener('volumechange',()=>{if(!video.muted)video.volume=.15})});
 const showcaseVideo=document.querySelector('video[data-video-playlist]');
 if(showcaseVideo){
 	const playlist=['assets/VIDEOS/copy_07BC608B-EE10-4DE0-950A-C0382CABEE38.MOV','assets/VIDEOS/copy_1479579D-7682-48EA-97FE-ED831D05635C.MOV','assets/VIDEOS/copy_BFFB4A9F-3235-4D95-962D-079E98E799BC.MOV'];
 	let playlistIndex=0;
-	showcaseVideo.addEventListener('ended',()=>{playlistIndex=(playlistIndex+1)%playlist.length;showcaseVideo.src=playlist[playlistIndex];showcaseVideo.load();showcaseVideo.play().catch(()=>{});});
+	showcaseVideo.addEventListener('ended',()=>{playlistIndex=(playlistIndex+1)%playlist.length;showcaseVideo.src=playlist[playlistIndex];showcaseVideo.load();const playback=showcaseVideo.play();if(playback&&playback.catch)playback.catch(()=>{});});
 }
 
 const translations={
 	en:{
-		navHome:'Home',navPools:'Custom Pools',navHardscapes:'Hardscapes',navRenovations:'Renovations',navOutdoor:'Outdoor Living',navPortfolio:'Portfolio',navStory:'Our Story',navConsultation:'Request a Consultation',
+		navHome:'Home',navPools:'Custom Pools',navHardscapes:'Hardscapes',navRenovations:'Renovations',navOutdoor:'Outdoor Living',navPortfolio:'Portfolio',navStory:'Our Story',navSocial:'Connect',navConsultation:'Request a Consultation',
 		headerEstimate:'Get a free estimate',headerMenu:'Menu',
 		heroLabel:'Custom Pools <i></i> Hardscapes <i></i> Outdoor Living',heroTitle:'Custom Pools.<br>Timeless Outdoor Spaces.<br>Built Around You.',heroText:'EMV Custom Pools & Restoration designs and builds custom pools, hardscapes, renovations, and complete outdoor living spaces with craftsmanship that transforms your backyard.',heroButton:'Request a consultation',viewProjects:'View our projects',
 		servicePools:'Custom Pools',servicePavers:'Pavers & Decks',serviceRestorations:'Pool Restorations',serviceOutdoor:'Outdoor Living',servicePoolsSub:'Design & Construction',servicePaversSub:'Patios, Walkways & More',serviceRestorationsSub:'Repair · Resurface · Upgrade',serviceOutdoorSub:'Fire Pits, Kitchens & More',footerCredit:'You like this page?',
@@ -66,7 +75,7 @@ document.querySelectorAll('.lang-btn').forEach(btn=>{
 applyTranslations(appState.lang);
 
 const estimateForm=document.getElementById('estimateForm');
-estimateForm?.addEventListener('submit',e=>{
+if(estimateForm) estimateForm.addEventListener('submit',e=>{
 	e.preventDefault();
 	const formData=new FormData(estimateForm);
 	const name=(formData.get('name')||'').toString().trim();
@@ -93,13 +102,13 @@ estimateForm?.addEventListener('submit',e=>{
 });
 
 const consultationForm=document.getElementById('consultationForm');
-consultationForm?.addEventListener('submit',e=>{
+if(consultationForm) consultationForm.addEventListener('submit',e=>{
 	e.preventDefault();
 	const formData=new FormData(consultationForm);
 	const value=name=>(formData.get(name)||'Not specified').toString().trim();
 	const firstName=value('firstName'),lastName=value('lastName'),phone=value('phone'),email=value('email'),address=value('address'),projectType=value('projectType'),budget=value('budget'),timeline=value('timeline'),message=value('message');
-	const inspiration=[...consultationForm.elements.inspiration.files].map(file=>file.name).join(', ')||'None uploaded';
-	const backyard=[...consultationForm.elements.backyard.files].map(file=>file.name).join(', ')||'None uploaded';
+	const inspiration=Array.prototype.map.call(consultationForm.elements.inspiration.files,file=>file.name).join(', ')||'None uploaded';
+	const backyard=Array.prototype.map.call(consultationForm.elements.backyard.files,file=>file.name).join(', ')||'None uploaded';
 	const subject=encodeURIComponent(`Consultation Request - ${projectType}`);
 	const body=encodeURIComponent(`Name: ${firstName} ${lastName}\nEmail: ${email}\nPhone: ${phone}\nProject Address / City: ${address}\nProject Type: ${projectType}\nEstimated Budget: ${budget}\nDesired Start Time: ${timeline}\n\nProject Details:\n${message}\n\nInspiration Photos: ${inspiration}\nBackyard Photos: ${backyard}`);
 	window.location.href=`mailto:emvpools007@gmail.com?cc=admin%40mdmsolutionlab.com&subject=${subject}&body=${body}`;
@@ -160,20 +169,22 @@ function shuffleArray(list){
 
 const windowEl=document.querySelector('.gallery-window'),track=document.querySelector('.gallery-track'),dotsWrap=document.querySelector('.dots'),pause=document.querySelector('.pause');
 if(windowEl&&track&&dotsWrap){
-	track.innerHTML=shuffleArray(imageSources).map(([src,title])=>`<figure><img src="${src}" alt="${title}"></figure>`).join('');
+	track.innerHTML=shuffleArray(imageSources).map(([src,title])=>`<figure><img loading="lazy" decoding="async" src="${src}" alt="${title}"></figure>`).join('');
 	const slides=[...track.querySelectorAll('figure')];
 	let index=0,timer,touchStart=0,isPaused=false;
 	slides.slice(0,4).forEach(slide=>{const clone=slide.cloneNode(true);clone.classList.add('gallery-clone');track.append(clone)});
 	slides.forEach((_,i)=>{const dot=document.createElement('button');dot.type='button';dot.setAttribute('aria-label',`Show project ${i+1}`);dot.addEventListener('click',()=>show(i));dotsWrap.append(dot)});
 	const dots=[...dotsWrap.children];
 	function visible(){return innerWidth<=560?1:innerWidth<=850?2:4}
-	function show(next,restart=true){const max=slides.length-1;index=next>max?0:next<0?max:next;const width=slides[0]?.getBoundingClientRect().width||0;track.style.transform=`translateX(-${index*(width+12.8)}px)`;slides.forEach((slide,i)=>slide.classList.toggle('is-visible',i>=index&&i<index+visible()));dots.forEach((d,i)=>d.classList.toggle('active',i===index));if(restart)start()}
+	function show(next,restart=true){const max=slides.length-1;index=next>max?0:next<0?max:next;const width=slides.length?slides[0].getBoundingClientRect().width:0;track.style.transform=`translateX(-${index*(width+12.8)}px)`;slides.forEach((slide,i)=>slide.classList.toggle('is-visible',i>=index&&i<index+visible()));dots.forEach((d,i)=>d.classList.toggle('active',i===index));if(restart)start()}
 	function start(){clearInterval(timer);if(!isPaused)timer=setInterval(()=>{const max=Math.max(0,slides.length-visible());show(index>=max?0:index+1,false)},2500)}
-	document.querySelector('.prev')?.addEventListener('click',()=>show(index-1));document.querySelector('.next')?.addEventListener('click',()=>show(index+1));
-	pause?.addEventListener('click',()=>{isPaused=!isPaused;pause.textContent=isPaused?'▶ Play':'Ⅱ Pause';pause.setAttribute('aria-pressed',String(isPaused));start()});
+	const previous=document.querySelector('.prev'),nextButton=document.querySelector('.next');
+	if(previous) previous.addEventListener('click',()=>show(index-1));
+	if(nextButton) nextButton.addEventListener('click',()=>show(index+1));
+	if(pause) pause.addEventListener('click',()=>{isPaused=!isPaused;pause.textContent=isPaused?'▶ Play':'Ⅱ Pause';pause.setAttribute('aria-pressed',String(isPaused));start()});
 	windowEl.addEventListener('touchstart',e=>touchStart=e.changedTouches[0].screenX,{passive:true});windowEl.addEventListener('touchend',e=>{const distance=e.changedTouches[0].screenX-touchStart;if(Math.abs(distance)>45)show(index+(distance<0?1:-1))},{passive:true});
 	addEventListener('resize',()=>show(index,false));document.addEventListener('visibilitychange',()=>document.hidden?clearInterval(timer):start());show(0,false);start();
 }
 
 const sections=[...document.querySelectorAll('main section[id]')],links=[...document.querySelectorAll('#nav a')];
-addEventListener('scroll',()=>{const active=sections.filter(s=>s.getBoundingClientRect().top<160).at(-1)?.id||'home';links.forEach(a=>a.classList.toggle('active',a.getAttribute('href')===`#${active}`))},{passive:true});
+addEventListener('scroll',()=>{const visibleSections=sections.filter(s=>s.getBoundingClientRect().top<160);const lastSection=visibleSections[visibleSections.length-1];const active=lastSection?lastSection.id:'home';links.forEach(a=>a.classList.toggle('active',a.getAttribute('href')===`#${active}`))},{passive:true});
