@@ -11,6 +11,17 @@ type GalleryItem = {
   sourceUrl?: string;
 };
 
+type GalleryResponse = {
+  items?: unknown;
+  error?: string;
+};
+
+function getGalleryError(status: number, payload: GalleryResponse) {
+  if (status === 500 && payload.error?.startsWith('Missing')) return 'Gallery service configuration is incomplete.';
+  if (status === 502) return 'The gallery provider is temporarily unavailable.';
+  return payload.error || `Gallery request failed (${status}).`;
+}
+
 type MDMSocialGalleryProps = {
   limit?: number;
   layout?: GalleryLayout;
@@ -35,11 +46,20 @@ export default function MDMSocialGallery({
           headers: { Accept: 'application/json' },
           signal: controller.signal,
         });
-        if (!response.ok) throw new Error('Gallery request failed');
-        const payload = await response.json();
-        setItems(Array.isArray(payload.items) ? payload.items : []);
+        const body = await response.text();
+        let payload: GalleryResponse = {};
+        try {
+          payload = body ? (JSON.parse(body) as GalleryResponse) : {};
+        } catch {
+          throw new Error(`Gallery service returned invalid data (${response.status}).`);
+        }
+        if (!response.ok) throw new Error(getGalleryError(response.status, payload));
+        if (!Array.isArray(payload.items)) throw new Error('Gallery service returned an unexpected response.');
+        setItems(payload.items as GalleryItem[]);
       } catch (requestError) {
-        if ((requestError as Error).name !== 'AbortError') setError('Project gallery is temporarily unavailable.');
+        if ((requestError as Error).name !== 'AbortError') {
+          setError(requestError instanceof TypeError ? 'Unable to reach the gallery service. Please check your connection.' : (requestError as Error).message || 'The latest social posts are temporarily unavailable.');
+        }
       } finally {
         if (!controller.signal.aborted) setLoading(false);
       }

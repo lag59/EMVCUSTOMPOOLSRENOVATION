@@ -4,6 +4,7 @@
   "version": "1.0.0",
   "type": "module",
   "scripts": {
+    "dev": "npx netlify-cli dev",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {

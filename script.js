@@ -176,7 +176,26 @@ if(mdmFeed){
 	if(feedNext)feedNext.addEventListener('click',()=>moveFeed(feedIndex+1));
 	mdmFeed.addEventListener('mouseenter',()=>clearInterval(feedTimer));mdmFeed.addEventListener('mouseleave',startFeed);
 	addEventListener('resize',()=>moveFeed(feedIndex,false));document.addEventListener('visibilitychange',startFeed);
-	fetch('/.netlify/functions/mdm-gallery?limit=12',{headers:{Accept:'application/json'}}).then(response=>response.json().then(payload=>{if(!response.ok)throw new Error(payload.error||`Feed unavailable (${response.status})`);return payload})).then(payload=>renderFeed(Array.isArray(payload.items)?payload.items:[])).catch(error=>{if(feedStatus)feedStatus.textContent=error.message||'The latest social posts are temporarily unavailable.';console.error('MDM social feed:',error)});
+	const loadFeed=async()=>{
+		try{
+			const response=await fetch('/.netlify/functions/mdm-gallery?limit=12',{headers:{Accept:'application/json'}});
+			const body=await response.text();
+			let payload={};
+			try{payload=body?JSON.parse(body):{}}catch(error){throw new Error(`Gallery service returned invalid data (${response.status}).`)}
+			if(!response.ok){
+				if(response.status===500&&String(payload.error||'').startsWith('Missing'))throw new Error('Gallery service configuration is incomplete.');
+				if(response.status===502)throw new Error('The gallery provider is temporarily unavailable.');
+				throw new Error(payload.error||`Gallery request failed (${response.status}).`);
+			}
+			if(!Array.isArray(payload.items))throw new Error('Gallery service returned an unexpected response.');
+			renderFeed(payload.items);
+		}catch(error){
+			const message=error instanceof TypeError?'Unable to reach the gallery service. Please check your connection.':error.message||'The latest social posts are temporarily unavailable.';
+			if(feedStatus)feedStatus.textContent=message;
+			console.error('MDM social feed:',error);
+		}
+	};
+	loadFeed();
 }
 
 function shuffleArray(list){
