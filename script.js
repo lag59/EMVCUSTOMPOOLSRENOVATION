@@ -190,9 +190,27 @@ function shuffleArray(list){
 
 const windowEl=document.querySelector('.gallery-window'),track=document.querySelector('.gallery-track'),dotsWrap=document.querySelector('.dots'),pause=document.querySelector('.pause');
 if(windowEl&&track&&dotsWrap){
-	const initialGalleryItems=shuffleArray(imageSources).slice(0,8);
-	track.innerHTML=initialGalleryItems.map(([src,title])=>`<figure><img loading="lazy" decoding="async" src="${src}" alt="${title}"></figure>`).join('');
+	const initialGalleryItems=shuffleArray([...imageSources]).slice(0,8);
+	const galleryFragment=document.createDocumentFragment();
+	initialGalleryItems.forEach(([src,title])=>{
+		let imageUrl;
+		try{
+			const parsedUrl=document.createElement('a');
+			parsedUrl.href=src;
+			if(parsedUrl.protocol!=='http:'&&parsedUrl.protocol!=='https:')return;
+			imageUrl=parsedUrl.href;
+		}catch(error){return}
+		const figure=document.createElement('figure');
+		const image=document.createElement('img');
+		image.loading='lazy';image.decoding='async';image.src=imageUrl;image.alt=String(title||'EMV Custom Pools project');
+		figure.append(image);galleryFragment.append(figure);
+	});
+	while(track.firstChild)track.removeChild(track.firstChild);
+	track.appendChild(galleryFragment);
 	const slides=[...track.querySelectorAll('figure')];
+	if(!slides.length){
+		track.textContent='No featured projects are available.';
+	}else{
 	let index=0,timer,touchStart=0,isPaused=false;
 	slides.slice(0,Math.min(4,slides.length)).forEach(slide=>{const clone=slide.cloneNode(true);clone.classList.add('gallery-clone');track.append(clone)});
 	slides.forEach((_,i)=>{const dot=document.createElement('button');dot.type='button';dot.setAttribute('aria-label',`Show project ${i+1}`);dot.addEventListener('click',()=>show(i));dotsWrap.append(dot)});
@@ -206,6 +224,7 @@ if(windowEl&&track&&dotsWrap){
 	if(pause) pause.addEventListener('click',()=>{isPaused=!isPaused;pause.textContent=isPaused?'▶ Play':'Ⅱ Pause';pause.setAttribute('aria-pressed',String(isPaused));start()});
 	windowEl.addEventListener('touchstart',e=>touchStart=e.changedTouches[0].screenX,{passive:true});windowEl.addEventListener('touchend',e=>{const distance=e.changedTouches[0].screenX-touchStart;if(Math.abs(distance)>45)show(index+(distance<0?1:-1))},{passive:true});
 	addEventListener('resize',()=>show(index,false));document.addEventListener('visibilitychange',()=>document.hidden?clearInterval(timer):start());show(0,false);start();
+	}
 }
 
 const sections=[...document.querySelectorAll('main section[id]')],links=[...document.querySelectorAll('#nav a')];
