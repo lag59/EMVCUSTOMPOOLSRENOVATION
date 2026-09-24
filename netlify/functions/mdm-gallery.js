@@ -16,9 +16,23 @@ function json(statusCode, body, headers = {}) {
 }
 
 function normalizeItems(payload) {
-  const items = Array.isArray(payload)
-    ? payload
-    : payload?.items || payload?.gallery || payload?.images || payload?.data || [];
+  const findItems = (value, depth = 0) => {
+    if (depth > 4 || value == null) return [];
+    if (Array.isArray(value)) return value;
+    if (typeof value !== 'object') return [];
+
+    for (const key of ['items', 'gallery', 'images', 'posts', 'media', 'photos', 'approvedImages']) {
+      if (Array.isArray(value[key])) return value[key];
+    }
+
+    for (const key of ['data', 'profile', 'business', 'result']) {
+      const nested = findItems(value[key], depth + 1);
+      if (nested.length) return nested;
+    }
+    return [];
+  };
+
+  const items = findItems(payload);
 
   if (!Array.isArray(items)) return [];
 
@@ -27,8 +41,8 @@ function normalizeItems(payload) {
       if (typeof item === 'string') return { imageUrl: item };
       return {
         id: item.id || item._id || item.slug || item.imageUrl || item.url,
-        imageUrl: item.imageUrl || item.image_url || item.url || item.src,
-        thumbnailUrl: item.thumbnailUrl || item.thumbnail_url || item.thumbnail || item.imageUrl || item.url || item.src,
+        imageUrl: item.imageUrl || item.image_url || item.image || item.photoUrl || item.photo_url || item.url || item.src,
+        thumbnailUrl: item.thumbnailUrl || item.thumbnail_url || item.thumbnail || item.previewUrl || item.preview_url || item.imageUrl || item.image_url || item.image || item.url || item.src,
         title: item.title || item.name || item.caption || '',
         sourceUrl: item.sourceUrl || item.source_url || item.permalink || item.link || '',
         alt: item.alt || item.title || item.name || 'EMV Custom Pools project',
@@ -65,7 +79,7 @@ exports.handler = async (event) => {
 
     if (!response.ok) {
       console.error(`MDM gallery request failed: ${response.status}`);
-      return json(502, { error: 'Gallery service unavailable.' });
+      return json(502, { error: 'Gallery service unavailable.', status: response.status });
     }
 
     const payload = await response.json();

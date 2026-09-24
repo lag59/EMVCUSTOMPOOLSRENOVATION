@@ -176,7 +176,7 @@ if(mdmFeed){
 	if(feedNext)feedNext.addEventListener('click',()=>moveFeed(feedIndex+1));
 	mdmFeed.addEventListener('mouseenter',()=>clearInterval(feedTimer));mdmFeed.addEventListener('mouseleave',startFeed);
 	addEventListener('resize',()=>moveFeed(feedIndex,false));document.addEventListener('visibilitychange',startFeed);
-	fetch('/.netlify/functions/mdm-gallery?limit=12',{headers:{Accept:'application/json'}}).then(response=>{if(!response.ok)throw new Error('Feed unavailable');return response.json()}).then(payload=>renderFeed(Array.isArray(payload.items)?payload.items:[])).catch(()=>{if(feedStatus)feedStatus.textContent='The latest social posts will appear here after the feed is connected.'});
+	fetch('/.netlify/functions/mdm-gallery?limit=12',{headers:{Accept:'application/json'}}).then(response=>response.json().then(payload=>{if(!response.ok)throw new Error(payload.error||`Feed unavailable (${response.status})`);return payload})).then(payload=>renderFeed(Array.isArray(payload.items)?payload.items:[])).catch(error=>{if(feedStatus)feedStatus.textContent=error.message||'The latest social posts are temporarily unavailable.';console.error('MDM social feed:',error)});
 }
 
 function shuffleArray(list){
