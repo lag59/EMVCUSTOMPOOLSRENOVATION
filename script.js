@@ -20,13 +20,17 @@ document.querySelectorAll('.contact-grid').forEach(grid=>{if(grid.querySelector(
 document.querySelectorAll('.footer-social a').forEach(link=>{if(link.textContent.toLowerCase().includes('tiktok')){link.href='https://www.tiktok.com/@pools.builder';link.target='_blank';link.rel='noopener noreferrer'}});
 
 const menu=document.querySelector('.menu-button'),nav=document.querySelector('#nav');
-if(nav&&!nav.querySelector('a[href="social-connect.html"]')){
+if(nav){
+	const socialLinks=[...nav.querySelectorAll('a[href="social-connect.html"]')];
+	socialLinks.slice(1).forEach(link=>link.remove());
+	if(socialLinks.length===0){
 	const socialLink=document.createElement('a');
 	socialLink.href='social-connect.html';
 	socialLink.dataset.i18n='navSocial';
 	socialLink.textContent='Connect';
 	const consultationLink=nav.querySelector('.nav-cta');
 	if(consultationLink) nav.insertBefore(socialLink,consultationLink); else nav.append(socialLink);
+	}
 }
 if(menu&&nav) menu.addEventListener('click',()=>{const open=menu.getAttribute('aria-expanded')==='true';menu.setAttribute('aria-expanded',String(!open));nav.classList.toggle('open',!open)});
 if(nav) nav.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{nav.classList.remove('open');if(menu)menu.setAttribute('aria-expanded','false')}));
