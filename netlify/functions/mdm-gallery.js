@@ -65,8 +65,12 @@ exports.handler = async (event) => {
   }
 
   const limit = Math.min(Math.max(Number.parseInt(event.queryStringParameters?.limit || '12', 10) || 12, 1), 50);
-  const separator = apiUrl.includes('?') ? '&' : '?';
-  const requestUrl = `${apiUrl}${separator}business=${encodeURIComponent(businessSlug)}&businessSlug=${encodeURIComponent(businessSlug)}&limit=${limit}`;
+  const configuredUrl = apiUrl.replace(/\/+$/, '');
+  const galleryUrl = /\/api\/v1\/businesses\/[^/]+\/gallery$/i.test(configuredUrl)
+    ? configuredUrl
+    : `${configuredUrl}/api/v1/businesses/${encodeURIComponent(businessSlug)}/gallery`;
+  const separator = galleryUrl.includes('?') ? '&' : '?';
+  const requestUrl = `${galleryUrl}${separator}limit=${limit}`;
 
   try {
     const response = await fetch(requestUrl, {
