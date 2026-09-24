@@ -190,10 +190,11 @@ function shuffleArray(list){
 
 const windowEl=document.querySelector('.gallery-window'),track=document.querySelector('.gallery-track'),dotsWrap=document.querySelector('.dots'),pause=document.querySelector('.pause');
 if(windowEl&&track&&dotsWrap){
-	track.innerHTML=shuffleArray(imageSources).map(([src,title])=>`<figure><img loading="lazy" decoding="async" src="${src}" alt="${title}"></figure>`).join('');
+	const initialGalleryItems=shuffleArray(imageSources).slice(0,8);
+	track.innerHTML=initialGalleryItems.map(([src,title])=>`<figure><img loading="lazy" decoding="async" src="${src}" alt="${title}"></figure>`).join('');
 	const slides=[...track.querySelectorAll('figure')];
 	let index=0,timer,touchStart=0,isPaused=false;
-	slides.slice(0,4).forEach(slide=>{const clone=slide.cloneNode(true);clone.classList.add('gallery-clone');track.append(clone)});
+	slides.slice(0,Math.min(4,slides.length)).forEach(slide=>{const clone=slide.cloneNode(true);clone.classList.add('gallery-clone');track.append(clone)});
 	slides.forEach((_,i)=>{const dot=document.createElement('button');dot.type='button';dot.setAttribute('aria-label',`Show project ${i+1}`);dot.addEventListener('click',()=>show(i));dotsWrap.append(dot)});
 	const dots=[...dotsWrap.children];
 	function visible(){return innerWidth<=560?1:innerWidth<=850?2:4}
