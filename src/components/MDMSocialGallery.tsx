@@ -22,6 +22,35 @@ function getGalleryError(status: number, payload: GalleryResponse) {
   return payload.error || `Gallery request failed (${status}).`;
 }
 
+function isRecord(value: unknown): value is Record<string, unknown> {
+  return typeof value === 'object' && value !== null;
+}
+
+function normalizeGalleryItems(value: unknown): GalleryItem[] {
+  if (!Array.isArray(value)) return [];
+
+  return value.flatMap((item): GalleryItem[] => {
+    if (typeof item === 'string') {
+      return /^https?:\/\//i.test(item) ? [{ imageUrl: item }] : [];
+    }
+    if (!isRecord(item)) return [];
+
+    const imageUrl = [item.imageUrl, item.image_url, item.image, item.photoUrl, item.photo_url, item.url, item.src]
+      .find((candidate): candidate is string => typeof candidate === 'string' && /^https?:\/\//i.test(candidate));
+    if (!imageUrl) return [];
+
+    const thumbnailUrl = [item.thumbnailUrl, item.thumbnail_url, item.thumbnail, item.previewUrl, item.preview_url]
+      .find((candidate): candidate is string => typeof candidate === 'string' && /^https?:\/\//i.test(candidate));
+    const title = [item.title, item.name, item.caption].find((candidate): candidate is string => typeof candidate === 'string');
+    const sourceUrl = [item.sourceUrl, item.source_url, item.permalink, item.link]
+      .find((candidate): candidate is string => typeof candidate === 'string' && /^https?:\/\//i.test(candidate));
+    const alt = typeof item.alt === 'string' ? item.alt : title;
+    const id = [item.id, item._id, item.slug].find((candidate): candidate is string => typeof candidate === 'string');
+
+    return [{ id, imageUrl, thumbnailUrl, title, sourceUrl, alt }];
+  });
+}
+
 type MDMSocialGalleryProps = {
   limit?: number;
   layout?: GalleryLayout;
@@ -55,7 +84,7 @@ export default function MDMSocialGallery({
         }
         if (!response.ok) throw new Error(getGalleryError(response.status, payload));
         if (!Array.isArray(payload.items)) throw new Error('Gallery service returned an unexpected response.');
-        setItems(payload.items as GalleryItem[]);
+        setItems(normalizeGalleryItems(payload.items));
       } catch (requestError) {
         if ((requestError as Error).name !== 'AbortError') {
           setError(requestError instanceof TypeError ? 'Unable to reach the gallery service. Please check your connection.' : (requestError as Error).message || 'The latest social posts are temporarily unavailable.');
