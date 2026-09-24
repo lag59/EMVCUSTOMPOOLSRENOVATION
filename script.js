@@ -21,16 +21,16 @@ document.querySelectorAll('.footer-social a').forEach(link=>{if(link.textContent
 
 const menu=document.querySelector('.menu-button'),nav=document.querySelector('#nav');
 if(nav){
-	const socialLinks=[...nav.querySelectorAll('a[href="social-connect.html"]')];
+	const socialLinks=[...nav.querySelectorAll('a')].filter(link=>link.getAttribute('href')==='social-connect.html'||link.dataset.i18n==='navSocial'||link.textContent.trim().toLowerCase()==='connect');
+	let socialLink=socialLinks[0];
 	socialLinks.slice(1).forEach(link=>link.remove());
-	if(socialLinks.length===0){
-	const socialLink=document.createElement('a');
+	if(!socialLink){
+		socialLink=document.createElement('a');
+		nav.insertBefore(socialLink,nav.querySelector('.nav-cta'));
+	}
 	socialLink.href='social-connect.html';
 	socialLink.dataset.i18n='navSocial';
-	socialLink.textContent='Connect';
-	const consultationLink=nav.querySelector('.nav-cta');
-	if(consultationLink) nav.insertBefore(socialLink,consultationLink); else nav.append(socialLink);
-	}
+	if(!socialLink.textContent.trim())socialLink.textContent='Connect';
 }
 if(menu&&nav) menu.addEventListener('click',()=>{const open=menu.getAttribute('aria-expanded')==='true';menu.setAttribute('aria-expanded',String(!open));nav.classList.toggle('open',!open)});
 if(nav) nav.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{nav.classList.remove('open');if(menu)menu.setAttribute('aria-expanded','false')}));
