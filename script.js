@@ -184,7 +184,11 @@ if(mdmFeed){
 			try{payload=body?JSON.parse(body):{}}catch(error){throw new Error(`Gallery service returned invalid data (${response.status}).`)}
 			if(!response.ok){
 				if(response.status===500&&String(payload.error||'').startsWith('Missing'))throw new Error('Gallery service configuration is incomplete.');
-				if(response.status===502)throw new Error('The gallery provider is temporarily unavailable.');
+				if(response.status===502){
+					if(String(payload.error||'').includes('API key rejected'))throw new Error('The MDM API key was rejected or lacks gallery access.');
+					if(String(payload.error||'').includes('business or gallery endpoint'))throw new Error('The MDM business slug or gallery endpoint was not found.');
+					throw new Error('The gallery provider is temporarily unavailable.');
+				}
 				throw new Error(payload.error||`Gallery request failed (${response.status}).`);
 			}
 			if(!Array.isArray(payload.items))throw new Error('Gallery service returned an unexpected response.');

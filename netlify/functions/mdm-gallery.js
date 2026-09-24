@@ -127,8 +127,14 @@ export const handler = async (event) => {
         body
       );
 
+      const error = response.status === 401 || response.status === 403
+        ? "MDM API key rejected or gallery access is not enabled."
+        : response.status === 404
+          ? "MDM business or gallery endpoint was not found."
+          : "MDM gallery request failed";
+
       return json(502, {
-        error: "MDM gallery request failed",
+        error,
         upstreamStatus: response.status,
       });
     }

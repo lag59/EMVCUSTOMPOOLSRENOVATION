@@ -18,6 +18,8 @@ type GalleryResponse = {
 
 function getGalleryError(status: number, payload: GalleryResponse) {
   if (status === 500 && payload.error?.startsWith('Missing')) return 'Gallery service configuration is incomplete.';
+  if (payload.error?.includes('API key rejected')) return 'The MDM API key was rejected or lacks gallery access.';
+  if (payload.error?.includes('business or gallery endpoint')) return 'The MDM business slug or gallery endpoint was not found.';
   if (status === 502) return 'The gallery provider is temporarily unavailable.';
   return payload.error || `Gallery request failed (${status}).`;
 }
